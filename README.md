@@ -20,8 +20,8 @@ Mạch điều khiển hiệu ứng âm thanh, LED RGB và IR cho Decade Driver,
 | **Touch Sensor**        |                 |
 | Touch 1                 | GPIO6           |
 | **Switch (Input)**      |                 |
-| BTN16 (Switch 1)        | GPIO4           |
-| BTN17 (Switch 2)        | GPIO5           |
+| L1 (Switch 1)        | GPIO4           |
+| L2 (Switch 2)        | GPIO5           |
 | **LED RGB (PWM)**       |                 |
 | LED R                   | GPIO7           |
 | LED G                   | GPIO8           |
