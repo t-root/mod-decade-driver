@@ -25,7 +25,7 @@ Mạch điều khiển hiệu ứng âm thanh, LED RGB và IR cho Decade Driver,
 | **LED RGB (PWM)**       |                 |
 | LED R                   | GPIO7           |
 | LED G                   | GPIO8           |
-| LED B                   | GPIO10          |
+| LED B                   | GPIO9         |
 | **Digital Output / IR** |                 |
 | S1_PIN (Output 1)       | GPIO2           |
 | S2_PIN (Output 2)       | GPIO3           |
