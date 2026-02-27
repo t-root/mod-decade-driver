@@ -1,0 +1,95 @@
+#include <Arduino.h>
+
+// Định nghĩa GPIO cho LED RGB - ESP32-C3 Super Mini
+// Mapping giống main.cpp:
+//  - LED_RED   -> GPIO7
+//  - LED_GREEN -> GPIO8
+//  - LED_BLUE  -> GPIO10
+#define LED_RED 7
+#define LED_GREEN 8
+#define LED_BLUE 9
+
+// Định nghĩa PWM
+#define PWM_FREQ 5000      // 5 kHz
+#define PWM_RESOLUTION 8   // 8-bit (0-255)
+#define RED_CHANNEL 0
+#define GREEN_CHANNEL 1
+#define BLUE_CHANNEL 2
+
+// Hàm khởi tạo LED RGB
+void setupRGBLED() {
+  // Cài đặt PWM cho các chân LED
+  ledcSetup(RED_CHANNEL, PWM_FREQ, PWM_RESOLUTION);
+  ledcSetup(GREEN_CHANNEL, PWM_FREQ, PWM_RESOLUTION);
+  ledcSetup(BLUE_CHANNEL, PWM_FREQ, PWM_RESOLUTION);
+  
+  // Gắn các chân vào các channel PWM
+  ledcAttachPin(LED_RED, RED_CHANNEL);
+  ledcAttachPin(LED_GREEN, GREEN_CHANNEL);
+  ledcAttachPin(LED_BLUE, BLUE_CHANNEL);
+}
+
+// Hàm điều khiển màu RGB (0-255 cho mỗi màu)
+void setRGBColor(uint8_t red, uint8_t green, uint8_t blue) {
+  ledcWrite(RED_CHANNEL, red);
+  ledcWrite(GREEN_CHANNEL, green);
+  ledcWrite(BLUE_CHANNEL, blue);
+}
+
+// Hàm tắt đèn
+void turnOffLED() {
+  setRGBColor(0, 0, 0);
+}
+
+void setup() {
+  Serial.begin(115200);
+  
+  // Khởi tạo LED RGB
+  setupRGBLED();
+  
+  Serial.println("RGB LED Control Started!");
+}
+
+void loop() {
+  // Hiển thị từng màu cơ bản
+  
+  // Đỏ
+  Serial.println("Red");
+  setRGBColor(255, 0, 0);
+  delay(1000);
+  
+  // Xanh lá
+  Serial.println("Green");
+  setRGBColor(0, 255, 0);
+  delay(1000);
+  
+  // Xanh dương
+  Serial.println("Blue");
+  setRGBColor(0, 0, 255);
+  delay(1000);
+  
+  // Vàng
+  Serial.println("Yellow");
+  setRGBColor(255, 255, 0);
+  delay(1000);
+  
+  // Tím
+  Serial.println("Magenta");
+  setRGBColor(255, 0, 255);
+  delay(1000);
+  
+  // Cyan
+  Serial.println("Cyan");
+  setRGBColor(0, 255, 255);
+  delay(1000);
+  
+  // Trắng
+  Serial.println("White");
+  setRGBColor(255, 255, 255);
+  delay(1000);
+  
+  // Tắt
+  Serial.println("Off");
+  turnOffLED();
+  delay(1000);
+}

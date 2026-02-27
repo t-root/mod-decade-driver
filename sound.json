@@ -1,0 +1,37 @@
+{
+  "basic": {
+    "in_card": "001.mp3",
+    "out_card": "002.mp3",
+    "open": "003.mp3",
+    "close": "004.mp3",
+    "error": "005.mp3",
+    "kamen_ride": "006.mp3",
+    "attack_ride": "007.mp3",
+    "final_attack_ride": "008.mp3",
+    "final_form_ride": "009.mp3",
+    "no_voice": "010.mp3",
+    "boot_sound": "011.mp3"
+  },
+
+  "bmg": {
+    "kiva": "001.mp3",
+    "decade": "012.mp3",
+    "blade": "013.mp3"
+  },
+
+  "voice": {
+    "decade": ["001.mp3", "002.mp3", "003.mp3", "004.mp3"],
+    "kiva": ["005.mp3", "006.mp3", "007.mp3", "008.mp3"],
+    "blade": ["009.mp3", "010.mp3", "011.mp3", "012.mp3"]
+  },
+
+  "card": {
+    "010100101011": {
+      "name": "Decade Kuuga",
+      "type": "kamen_ride",
+      "voice": "decade",
+      "bmg": "decade",
+      "file": "0001.mp3"
+    }
+  }
+}

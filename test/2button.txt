@@ -1,0 +1,24 @@
+#include <Arduino.h>
+
+// Test 2 công tắc trên ESP32-C3 Super Mini
+// SW1 -> GPIO4 (BTN16 trong main.cpp)
+// SW2 -> GPIO5 (BTN17 trong main.cpp)
+#define SW1 4
+#define SW2 5
+
+void setup() {
+  Serial.begin(115200);
+
+  pinMode(SW1, INPUT_PULLUP);
+  pinMode(SW2, INPUT_PULLUP);
+
+  Serial.println("Bat dau test cong tac GPIO4 (SW1) va GPIO5 (SW2) - ESP32-C3");
+}
+
+void loop() {
+  int sw1 = !digitalRead(SW1);  // đảo
+  int sw2 = !digitalRead(SW2);
+
+  Serial.printf("SW1=%d  SW2=%d\n", sw1, sw2);
+  delay(200);
+}

@@ -1,0 +1,17 @@
+// Test cảm biến touch/digital trên ESP32-C3 Super Mini
+// Dùng chân GPIO6 như trong main.cpp
+#include <Arduino.h>
+#define TOUCH_PIN 6
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(TOUCH_PIN, INPUT);
+}
+
+void loop() {
+  int state = digitalRead(TOUCH_PIN);
+
+  Serial.println(state);   // 0 = không chạm, 1 = chạm (tuỳ wiring)
+
+  delay(50);
+}

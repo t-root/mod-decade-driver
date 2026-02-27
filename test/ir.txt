@@ -1,0 +1,35 @@
+#include <Arduino.h>
+
+// Test IR / digital input trên ESP32-C3 Super Mini
+// Mapping giống main.cpp:
+//  - S1_PIN -> GPIO2
+//  - S2_PIN -> GPIO3
+#define S1_PIN 2
+#define S2_PIN 3
+
+int prev_s1 = -1;
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(S1_PIN, INPUT);
+  pinMode(S2_PIN, INPUT);
+
+  Serial.println("s1\ts2");
+}
+
+void loop() {
+  int s1 = digitalRead(S1_PIN);
+  int s2 = digitalRead(S2_PIN);
+
+  if (prev_s1 == -1) {
+    prev_s1 = s1;
+    return;
+  }
+
+  if (s1 != prev_s1) {
+    Serial.print(s1);
+    Serial.print("\t");
+    Serial.println(s2);
+    prev_s1 = s1;
+  }
+}
