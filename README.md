@@ -15,8 +15,8 @@ Mạch điều khiển hiệu ứng âm thanh, LED RGB và IR cho Decade Driver,
 | Thiết bị                | Chân (ESP32-C3) |
 | ----------------------- | --------------- |
 | **DFPlayer Mini MP3**   |                 |
-| TX (DFPlayer → ESP)     | GPIO20 (RX1)    |
-| RX (DFPlayer ← ESP)     | GPIO21 (TX1)    |
+| TX (DFPlayer → ESP)     | GPIO21 (RX1)    |
+| RX (DFPlayer ← ESP)     | GPIO20 (TX1)    |
 | **Touch Sensor**        |                 |
 | Touch 1                 | GPIO6           |
 | **Switch (Input)**      |                 |
@@ -27,7 +27,7 @@ Mạch điều khiển hiệu ứng âm thanh, LED RGB và IR cho Decade Driver,
 | LED G                   | GPIO8           |
 | LED B                   | GPIO9         |
 | **Digital Output / IR** |                 |
-| S1_PIN (Output 1)       | GPIO2           |
+| S1_PIN (Output 1)       | GPIO1           |
 | S2_PIN (Output 2)       | GPIO3           |
 
 ---

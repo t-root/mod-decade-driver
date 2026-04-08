@@ -7,7 +7,6 @@
 #include <Preferences.h>
 #include <LittleFS.h>
 #include <SPIFFS.h>
-#include "default_sound_json.h"
 
 // Disable brownout detector to prevent resets
 #include "soc/soc.h"
@@ -23,6 +22,277 @@ DFRobotDFPlayerMini player;
 // Nếu bạn dùng quá nhiều card và gặp lỗi "NoMemory", tăng thêm giá trị này.
 static DynamicJsonDocument soundConfig(150000);
 
+// sound.json mặc định (dùng khi lần đầu nạp code, chưa có dữ liệu trong Preferences)
+const char defaultSoundJson[] PROGMEM = R"rawliteral(
+{
+  "basic": {
+    "boot_sound": "011.mp3",
+    "kamen_ride": "006.mp3",
+    "attack_ride": "007.mp3",
+    "final_attack_ride": "008.mp3",
+    "final_form_ride": "009.mp3",
+    "touch": "010.mp3",
+    "in_card": "001.mp3",
+    "out_card": "002.mp3",
+    "open": "003.mp3",
+    "close": "004.mp3",
+    "error": "005.mp3"
+  },
+  "bmg": {
+    "decade": "001.mp3"
+  },
+  "voice": {
+    "decade": ["001.mp3", "002.mp3", "003.mp3", "004.mp3"]
+  },
+  "card": {
+    "01101110101": {
+      "name": "Decade",
+      "type": "kamen_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0010.mp3"
+    },
+    "11100111111": {
+      "name": "w",
+      "type": "kamen_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0011.mp3"
+    },
+    "11101000011": {
+      "name": "OOO",
+      "type": "kamen_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0012.mp3"
+    },
+    "11101001101": {
+      "name": "Fourze",
+      "type": "kamen_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0013.mp3"
+    },
+    "11101011111": {
+      "name": "Wizard",
+      "type": "kamen_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0014.mp3"
+    },
+    "11110010101": {
+      "name": "Gami",
+      "type": "kamen_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0015.mp3"
+    },
+    "11110110111": {
+      "name": "Drive",
+      "type": "kamen_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0016.mp3"
+    },
+    "00000100101": {
+      "name": "Gost",
+      "type": "kamen_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0017.mp3"
+    },
+    "00011000111": {
+      "name": "Ex-Aid",
+      "type": "kamen_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0018.mp3"
+    },
+    "00111011101": {
+      "name": "Build",
+      "type": "kamen_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0019.mp3"
+    },
+    "00111101101": {
+      "name": "Zi-O",
+      "type": "kamen_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0020.mp3"
+    },
+    "10111110111": {
+      "name": "Blade",
+      "type": "final_form_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0031.mp3"
+    },
+    "00000110111": {
+      "name": "Den-O",
+      "type": "final_form_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0034.mp3"
+    },
+    "11101010101": {
+      "name": "Decade",
+      "type": "final_form_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0036.mp3"
+    },
+    "10011101101": {
+      "name": "w",
+      "type": "final_form_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0037.mp3"
+    },
+    "10100000111": {
+      "name": "OOO",
+      "type": "final_form_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0038.mp3"
+    },
+    "10100110011": {
+      "name": "Fourze",
+      "type": "final_form_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0039.mp3"
+    },
+    "10110010011": {
+      "name": "Wizard",
+      "type": "final_form_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0040.mp3"
+    },
+    "11000011011": {
+      "name": "Gaim",
+      "type": "final_form_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0041.mp3"
+    },
+    "11010000001": {
+      "name": "drive",
+      "type": "final_form_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0042.mp3"
+    },
+    "11011011111": {
+      "name": "Gost",
+      "type": "final_form_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0043.mp3"
+    },
+    "11011110111": {
+      "name": "Ex-Aid",
+      "type": "final_form_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0044.mp3"
+    },
+    "11100010011": {
+      "name": "Build",
+      "type": "final_form_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0045.mp3"
+    },
+    "00001111011": {
+      "name": "Zi-O",
+      "type": "final_form_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0046.mp3"
+    },
+    "10000010111": {
+      "name": "BOKUNI TSURRRETE MIRU",
+      "type": "attack_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0053.mp3"
+    },
+    "10001000111": {
+      "name": "TSUPPARI",
+      "type": "final_attack_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0054.mp4"
+    },
+    "00101110011": {
+      "name": "HELSEL RIDER",
+      "type": "attack_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0055.mp3"
+    },
+    "01101000001": {
+      "name": "SLASH",
+      "type": "attack_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0056.mp3"
+    },
+    "01100110011": {
+      "name": "ILLUSION",
+      "type": "attack_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0057.mp3"
+    },
+    "01101010011": {
+      "name": "BLAST",
+      "type": "attack_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0058.mp3"
+    },
+    "01101100011": {
+      "name": "INVISIBLE",
+      "type": "attack_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0059.mp3"
+    },
+    "00000010101": {
+      "name": "REKKA DAIZANTOU",
+      "type": "attack_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0060.mp3"
+    },
+    "00000001101": {
+      "name": "Decade complete From",
+      "type": "kamen_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0061.mp3"
+    },
+    "01001010001": {
+      "name": "W Cyclone Joke Xtreme",
+      "type": "kamen_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0062.mp3"
+    },
+    "00010001110": {
+      "name": "GRANDZI-O",
+      "type": "kamen_ride",
+      "voice": "decade",
+      "bmg": "001.mp3",
+      "file": "0063.mp3"
+    }
+  }
+}
+)rawliteral";
 
 //////////////////////////////////////////////////////
 // PINS - ESP32-C3 Super Mini mapping
@@ -93,10 +363,8 @@ bool capturing=false;
 String bits="";
 int countBit=0;
 int prev_s1=-1;
-unsigned long captureStartMs=0;
-const unsigned long IR_CAPTURE_TIMEOUT_MS = 10000;
 
-String savedCardFile="";
+int savedFileNumber=-1;
 
 bool btn17Held=false;
 bool closePlaying=false;
@@ -114,8 +382,6 @@ unsigned long touchHoldStart=0;   // Time when touch started being held
 bool bmgPlaying=false;      // Flag: đang phát BMG file
 bool longPressTriggered=false; // Flag to prevent multiple long press triggers
 String currentCardId="";    // ID của card hiện tại
-bool finalModeEnabled=false; // Final mode: quet the phat thang file card
-const unsigned long FINAL_MODE_HOLD_MS = 5000;
 
 // State machine để đợi "in_card" phát xong
 enum PlayState { IDLE, WAITING_FOR_IN_CARD, HANDLING_CARD };
@@ -160,6 +426,7 @@ const char* AP_PASS = "decade123";
 
 WebServer server(80);
 Preferences pref;
+static String gNote = "Nhận mod đồ chơi liên hệ 0123456789 không nghe máy là do đang ỉa. By Bảo Đang ỈaỈa";
 
 // Preferences schema/build key:
 // Whenever this value changes, the firmware will clear the entire Preferences namespace once.
@@ -185,6 +452,71 @@ static bool ensureSoundFsReady(){
   }
   Serial.println("FS: LittleFS+SPIFFS both failed");
   return false;
+}
+
+static void handleNote(){
+  // GET /note            -> returns current note (text/plain)
+  // GET /note?note=...   -> set note, returns JSON
+  // Also supported via /note=... (handled in handleNotFound)
+  if(server.hasArg("note")){
+    String v = server.arg("note");
+    v.trim();
+    // Allow disabling popup
+    if(v.length() == 0) v = "no";
+    gNote = v;
+    pref.putString("note", gNote);
+    server.send(200, "application/json", String("{\"success\":true,\"note\":") + "\"" + gNote + "\"}");
+    return;
+  }
+  server.send(200, "text/plain", gNote);
+}
+
+// Forward decl for /note=... legacy path
+static String urlDecode(const String& in);
+
+static void handleNotFound(){
+  // Support legacy style: /note=NEW_NOTE
+  String uri = server.uri();
+  if(uri.startsWith("/note=")){
+    String v = uri.substring(String("/note=").length());
+    v.replace("+", " ");
+    v = urlDecode(v);
+    v.trim();
+    if(v.length() == 0) v = "no";
+    gNote = v;
+    pref.putString("note", gNote);
+    server.send(200, "application/json", String("{\"success\":true,\"note\":") + "\"" + gNote + "\"}");
+    return;
+  }
+  server.send(404, "text/plain", "Not found");
+}
+
+// Minimal URL decoder for /note=... path variant
+static String urlDecode(const String& in){
+  String out;
+  out.reserve(in.length());
+  for(size_t i = 0; i < in.length(); i++){
+    char c = in[i];
+    if(c == '%' && i + 2 < in.length()){
+      char h1 = in[i+1];
+      char h2 = in[i+2];
+      auto hexVal = [](char h)->int{
+        if(h >= '0' && h <= '9') return h - '0';
+        if(h >= 'a' && h <= 'f') return 10 + (h - 'a');
+        if(h >= 'A' && h <= 'F') return 10 + (h - 'A');
+        return -1;
+      };
+      int v1 = hexVal(h1);
+      int v2 = hexVal(h2);
+      if(v1 >= 0 && v2 >= 0){
+        out += char((v1 << 4) | v2);
+        i += 2;
+        continue;
+      }
+    }
+    out += c;
+  }
+  return out;
 }
 
 unsigned long apStartMillis = 0;
@@ -426,30 +758,13 @@ void playBase(const char* key){
 //////////////////////////////////////////////////////
 // PLAY ROOT FILE -> USE /MP3 via playMp3Folder()
 //////////////////////////////////////////////////////
-void playCardRoot(const char* fileName){
-  if(!fileName || fileName[0] == '\0'){
-    Serial.println("playCardRoot: empty file name");
-    return;
-  }
-  int num = fileToNum(fileName);
-  if(num <= 0){
-    Serial.printf("playCardRoot: invalid file name '%s'\n", fileName);
-    return;
-  }
+void playCardRoot(int num){
+  // Switch to MP3 folder playback to use numeric filenames reliably:
+  // /MP3/0001.mp3  -> playMp3Folder(1)
+  Serial.printf("Play MP3/%04d.mp3\n", num);
 
-  String lower = String(fileName);
-  lower.toLowerCase();
-
-  // Read extension from JSON:
-  // - *.mp3 => /MP3 with playMp3Folder()
-  // - *.wav => root playback with play()
-  if(lower.endsWith(".wav")){
-    Serial.printf("Play ROOT/%s via play(%d)\n", fileName, num);
-    player.play(num);
-  } else {
-    Serial.printf("Play MP3/%s via playMp3Folder(%d)\n", fileName, num);
-    player.playMp3Folder(num);
-  }
+  // play from /MP3 folder (stable mapping by number)
+  player.playMp3Folder(num);
 
   // Start MP3 playback LED control
   // Bật LED rõ ràng ngay khi bắt đầu phát MP3:
@@ -467,23 +782,6 @@ void playCardRoot(const char* fileName){
   mp3Playing = true;
   mp3PlayingFlag = true;
   mp3StartTime = millis();
-}
-
-void playFinalModePreview(){
-  Serial.println("FINAL MODE: preview /01/012.mp3");
-  player.playFolder(1, 12);
-}
-
-void setFinalMode(bool enabled, bool playPreview){
-  // One-way mode: can only be turned ON, never OFF until reboot.
-  if(!enabled || finalModeEnabled){
-    return;
-  }
-  finalModeEnabled = true;
-  Serial.println("FINAL MODE: ON (locked until reboot)");
-  if(playPreview){
-    playFinalModePreview();
-  }
 }
 
 //////////////////////////////////////////////////////
@@ -525,16 +823,6 @@ void playVoiceFile(){
   // Play from folder 02 - DFPlayer will handle if file doesn't exist
   player.playFolder(2, fileNum);
 
-  // Make sure LED is on during voice playback
-  ledFadingOut = false;
-  ledOn = true;
-  if(ledMode == MODE_COLOR){
-    setColor(curR, curG, curB);
-  } else {
-    colorIdx = random(0, 6);
-    setColor(colors[colorIdx][0], colors[colorIdx][1], colors[colorIdx][2]);
-  }
-
   voicePlaying = true;
 
   // Move to next index, loop back to 0 when finished
@@ -546,19 +834,14 @@ void playVoiceFile(){
 // PLAY BMG FILE from /03/ folder (long press)
 //////////////////////////////////////////////////////
 void playBmgFile(){
-  if(currentCardId.length() == 0){
-    Serial.println("playBmgFile: currentCardId is empty");
-    return;
-  }
+  if(currentCardId.length() == 0) return;
 
   if(!soundConfig.containsKey("card") || !soundConfig["card"].containsKey(currentCardId)){
-    Serial.printf("playBmgFile: card '%s' not found in soundConfig.card\n", currentCardId.c_str());
     return;
   }
 
   const char* bmgName = soundConfig["card"][currentCardId]["bmg"];
   if(!bmgName){
-    Serial.printf("playBmgFile: card '%s' missing bmg field\n", currentCardId.c_str());
     return;
   }
 
@@ -568,34 +851,11 @@ void playBmgFile(){
     bmgFile = soundConfig["bmg"][bmgName];
   }
 
-  int fileNum = -1;
-  if(bmgFile){
-    fileNum = fileToNum(bmgFile);
-    Serial.printf("playBmgFile: card='%s' bmg='%s'(key) -> /03/%03d.mp3\n",
-                  currentCardId.c_str(), bmgName, fileNum);
-  } else {
-    // Fallback: some cards store bmg as direct filename (e.g. "001.mp3")
-    // instead of a key inside soundConfig.bmg (e.g. "decade": "001.mp3").
-    if(bmgName && isdigit((unsigned char)bmgName[0])){
-      fileNum = fileToNum(bmgName);
-      Serial.printf("playBmgFile: bmg key '%s' not found -> fallback direct file /03/%03d.mp3\n",
-                    bmgName, fileNum);
-    } else {
-      Serial.printf("playBmgFile: bmg key '%s' not found in soundConfig.bmg\n", bmgName);
-      return;
-    }
+  if(!bmgFile){
+    return;
   }
 
-  // Make sure LED visible immediately (random brightness effect is handled in updateMp3Led)
-  ledFadingOut = false;
-  ledOn = true;
-  if(ledMode == MODE_COLOR){
-    setColor(curR, curG, curB);
-  } else {
-    colorIdx = random(0, 6);
-    setColor(colors[colorIdx][0], colors[colorIdx][1], colors[colorIdx][2]);
-  }
-
+  int fileNum = fileToNum(bmgFile);
   player.playFolder(3, fileNum);
   bmgPlaying = true;
 }
@@ -780,28 +1040,13 @@ void handleCard(String id){
   Serial.printf("CARD_VOICE: Requested card %s resolved to %s (voice='%s')\n",
                 id.c_str(), resolvedCardId.c_str(), currentVoiceType.c_str());
 
-  // Lưu file number của card đã resolve
-  savedCardFile = resolvedFile;
-  if(fileToNum(savedCardFile.c_str()) <= 0){
-    Serial.println("Invalid card file number, playing error...");
-    playBase("error");
-    playState=IDLE;
-    inCardFinished=false;
-    return;
-  }
-
-  // Final mode: quét thẻ là phát thẳng file card, bỏ qua type/lẫy
-  if(finalModeEnabled){
-    Serial.printf("FINAL MODE: direct play file '%s'\n", savedCardFile.c_str());
-    typePlayingPulse=false;
-    playCardRoot(savedCardFile.c_str());
-    return;
-  }
-
-  // Normal mode: phát type trước, file main phát khi giữ L2 (close)
+  // Phát type từ base section (type of resolved card)
   playBase(resolvedType.c_str());
   typePlayingPulse=true;  // Bật pulse LED
   typePulseStart=millis();
+
+  // Lưu file number cho button 17
+  savedFileNumber = fileToNum(resolvedFile.c_str());
 }
 
 //////////////////////////////////////////////////////
@@ -918,7 +1163,8 @@ button:hover{filter:saturate(1.1) brightness(1.05)}
 <h3>Driver Decade</h3>
 <div class="card">
   <div class="tabs">
-    <button class="tabbtn" id="tabSetup">Setup</button>
+    <button class="tabbtn" id="tabLed">LED</button>
+    <button class="tabbtn" id="tabVolume">Volume</button>
     <button class="tabbtn active" id="tabManage">Manage</button>
     <button class="tabbtn" id="tabLog">Log</button>
   </div>
@@ -946,17 +1192,7 @@ button:hover{filter:saturate(1.1) brightness(1.05)}
       <input type="range" id="volumeSlider" min="0" max="30" value="25" style="width:100%;max-width:300px">
     </div>
     <button onclick="setVolume()">Set Volume</button>
-    <div style="margin-top:14px;padding:10px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.03)">
-      <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
-        <input type="checkbox" id="finalModeToggle" onchange="setFinalModeFromWeb()">
-        <span>Final Mode (hold TOUCH 5s or enable here, lock until reboot)</span>
-      </label>
-      <div style="font-size:12px;color:var(--muted);margin-top:6px">
-        Final mode ON: insert card -> play card MP3 directly (skip type/latch). Cannot turn OFF until reboot.
-      </div>
-    </div>
     <div id="volumeMsg" class="msg"></div>
-    <div id="finalModeMsg" class="msg"></div>
   </div>
 
   <div id="manageSection">
@@ -1089,7 +1325,6 @@ button:hover{filter:saturate(1.1) brightness(1.05)}
   <div class="modal-card">
     <div class="modal-head">
       <div class="modal-title" id="modalTitle">Edit</div>
-      <button class="btn-sm" onclick="modalSave()">Save</button>
       <button class="btn-sm btn-ghost" onclick="closeModal()">Close</button>
     </div>
     <div class="modal-body" id="modalBody"></div> 
@@ -1097,7 +1332,8 @@ button:hover{filter:saturate(1.1) brightness(1.05)}
 </div>
 
 <script>
-const tSetup   = document.getElementById('tabSetup');
+const tLed     = document.getElementById('tabLed');
+const tVolume  = document.getElementById('tabVolume');
 const tManage  = document.getElementById('tabManage');
 const tLog     = document.getElementById('tabLog');
 
@@ -1111,8 +1347,9 @@ sManage.style.display = 'block';
 sLed.style.display = 'none';
 sVolume.style.display = 'none';
 sLog.style.display = 'none';
-tManage.classList.add('active'); // default
-tSetup.classList.remove('active');
+tManage.classList.add('active');
+tLed.classList.remove('active');
+tVolume.classList.remove('active');
 tLog.classList.remove('active');
 loadManageData();
 
@@ -1125,22 +1362,63 @@ function escapeHtml(s){
     .replaceAll("'","&#039;");
 }
 
-tSetup.onclick = ()=>{
-  tSetup.classList.add('active');
+async function loadNotePopup(){
+  try{
+    const r = await fetch('/note', { cache: 'no-store' });
+    if(!r.ok) return;
+    const t = (await r.text()).trim();
+    if(!t || t.toLowerCase() === 'no') return;
+    openModal(
+      'note',
+      'Note',
+      `
+        <div style="white-space:pre-wrap;line-height:1.35">${escapeHtml(t)}</div>
+        <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn-sm btn-ghost" onclick="disableNote()">Don't show again</button>
+        </div>
+      `
+    );
+  }catch(e){
+    // ignore
+  }
+}
+
+async function disableNote(){
+  try{
+    await fetch('/note?note=no', { cache:'no-store' });
+  }catch(e){}
+  closeModal();
+}
+
+tLed.onclick = ()=>{
+  tLed.classList.add('active');
+  tVolume.classList.remove('active');
   tManage.classList.remove('active');
   tLog.classList.remove('active');
   sLed.style.display='block';
-  sVolume.style.display='block';
+  sVolume.style.display='none';
   sManage.style.display='none';
   sLog.style.display='none';
-  // Load current volume/final settings from ESP
+};
+
+tVolume.onclick = ()=>{
+  tVolume.classList.add('active');
+  tLed.classList.remove('active');
+  tManage.classList.remove('active');
+  tLog.classList.remove('active');
+  sVolume.style.display='block';
+  sLed.style.display='none';
+  sManage.style.display='none';
+  sLog.style.display='none';
+  // Khi mở tab Volume thì load volume hiện tại từ ESP
   loadVolume();
-  loadFinalMode();
 };
 
 // Manage tab
 tManage.onclick = ()=>{
   tManage.classList.add('active');
+  tLed.classList.remove('active');
+  tVolume.classList.remove('active');
   tLog.classList.remove('active');
   sManage.style.display='block';
   sLed.style.display='none';
@@ -1152,6 +1430,8 @@ tManage.onclick = ()=>{
 // Log tab
 tLog.onclick = ()=>{
   tLog.classList.add('active');
+  tLed.classList.remove('active');
+  tVolume.classList.remove('active');
   tManage.classList.remove('active');
   sLog.style.display='block';
   sLed.style.display='none';
@@ -2197,50 +2477,6 @@ async function loadVolume(){
   }
 }
 
-async function loadFinalMode(){
-  try{
-    const r = await fetch('/get_final_mode');
-    if(!r.ok) throw new Error('HTTP '+r.status);
-    const j = await r.json();
-    if(j.success){
-      const tg = document.getElementById('finalModeToggle');
-      tg.checked = !!j.enabled;
-      tg.disabled = !!j.enabled;
-    }
-  } catch(e){
-    console.error('Failed to load final mode:', e);
-  }
-}
-
-async function setFinalModeFromWeb(){
-  const tg = document.getElementById('finalModeToggle');
-  const enabled = tg.checked;
-  const msg = document.getElementById('finalModeMsg');
-  if(!enabled){
-    tg.checked = true;
-    msg.textContent = 'Final mode cannot be turned OFF (reboot required).';
-    return;
-  }
-  msg.textContent = 'Enabling final mode...';
-  try{
-    const res = await fetch('/set_final_mode', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({enabled})
-    });
-    const j = await res.json();
-    msg.textContent = j.success
-      ? 'Final mode: ON (preview /01/012.mp3). Reboot to return normal mode.'
-      : ('Error: '+(j.error||'unknown'));
-    if(j.success){
-      tg.checked = true;
-      tg.disabled = true;
-    }
-  } catch(e){
-    msg.textContent = 'Error: '+e.message;
-  }
-}
-
 async function setVolume(){
   const volume = document.getElementById('volumeSlider').value;
   document.getElementById('volumeMsg').textContent = 'Setting volume...';
@@ -2295,6 +2531,8 @@ async function clearLog(){
 // Auto refresh mỗi 1s
 setInterval(refreshLog, 1000);
 
+// Show note popup once on initial load (if enabled)
+loadNotePopup();
 </script>
 </body>
 </html>
@@ -2536,8 +2774,9 @@ void handlePreviewSound(){
       return;
     }
 
-    // Dùng luôn logic playCardRoot để hưởng LED + state MP3/WAV
-    playCardRoot(resolvedFile.c_str());
+    int n = fileToNum(resolvedFile.c_str());
+    // Dùng luôn logic playCardRoot để hưởng LED + state MP3
+    playCardRoot(n);
   }
   else{
     server.send(400, "application/json", "{\"success\":false,\"error\":\"unknown section\"}");
@@ -2602,30 +2841,6 @@ void handleSetVolume(){
   server.send(200, "application/json", "{\"success\":true}");
 }
 
-void handleGetFinalMode(){
-  String res = "{\"success\":true,\"enabled\":";
-  res += (finalModeEnabled ? "true" : "false");
-  res += "}";
-  server.send(200, "application/json", res);
-}
-
-void handleSetFinalMode(){
-  String body = server.arg("plain");
-  if(body.length()==0){ server.send(400, "application/json", "{\"success\":false,\"error\":\"empty body\"}"); return; }
-
-  DynamicJsonDocument tmp(512);
-  DeserializationError err = deserializeJson(tmp, body);
-  if(err){ String res = String("{\"success\":false,\"error\":\"") + err.c_str() + "\"}"; server.send(400, "application/json", res); return; }
-
-  bool enabled = tmp["enabled"] | false;
-  if(!enabled){
-    server.send(400, "application/json", "{\"success\":false,\"error\":\"final mode can only be enabled; reboot to disable\"}");
-    return;
-  }
-  setFinalMode(true, true);
-  server.send(200, "application/json", "{\"success\":true}");
-}
-
 // Trả log thẻ cho web
 void handleCardLog(){
   DynamicJsonDocument doc(4096);
@@ -2687,6 +2902,8 @@ void setup(){
 
   // Preferences (store led state, volume)
   pref.begin("decade", false);
+  gNote = pref.getString("note", "Nhận mod đồ chơi liên hệ 0123456789 không nghe máy là do đang ỉa. By Bảo Đang ỈaỈa");
+
   // Auto-refresh Preferences after flashing new firmware:
   // If firmware build/schema changes, clear the whole namespace so config is rebuilt from defaults.
   uint32_t savedSchema = pref.getUInt("pref_schema", 0);
@@ -2782,8 +2999,6 @@ void setup(){
   uint16_t savedVolume = pref.getUShort("volume", 25);
   player.volume(savedVolume);
   uint16_t savedMode = pref.getUShort("led_mode", (uint16_t)MODE_RGB);
-  finalModeEnabled = false; // always reset on boot
-  Serial.println("FINAL MODE: OFF (reset on boot)");
   ledMode = (savedMode == MODE_COLOR) ? MODE_COLOR : MODE_RGB;
   uint16_t r = pref.getUShort("led_r", 255);
   uint16_t g = pref.getUShort("led_g", 0);
@@ -2807,16 +3022,15 @@ void setup(){
   server.on("/json", HTTP_GET, handleJsonPage);
   server.on("/sound.json", HTTP_GET, handleGetSound);
   server.on("/save", HTTP_POST, handleSaveSound);
+  server.on("/note", HTTP_GET, handleNote);
   server.on("/preview", HTTP_POST, handlePreviewSound);
   server.on("/set_color", HTTP_POST, handleSetColor);
   server.on("/preset", HTTP_GET, handlePresetColor);
   server.on("/get_volume", HTTP_GET, handleGetVolume);
   server.on("/set_volume", HTTP_POST, handleSetVolume);
-  server.on("/get_final_mode", HTTP_GET, handleGetFinalMode);
-  server.on("/set_final_mode", HTTP_POST, handleSetFinalMode);
   server.on("/card_log", HTTP_GET, handleCardLog);
   server.on("/card_log_clear", HTTP_POST, handleClearCardLog);
-  server.onNotFound([](){ server.send(404, "text/plain", "Not found"); });
+  server.onNotFound(handleNotFound);
   server.begin();
 
   // Auto-play boot sound after power-on
@@ -2837,20 +3051,6 @@ void loop(){
   // để việc đọc cạnh IR hoàn toàn sạch, không bị trễ.
   //////////////////////////////////////////////////
   if(capturing){
-    // Safety timeout: nếu không đọc đủ 13 bit trong 10 giây thì hủy phiên capture hiện tại.
-    if((millis() - captureStartMs) > IR_CAPTURE_TIMEOUT_MS){
-      Serial.printf("IR CAPTURE TIMEOUT: bits=%s len=%d -> cancel capture\n",
-                    bits.c_str(), countBit);
-      capturing=false;
-      bits="";
-      countBit=0;
-      prev_s1=-1;
-      pendingCardId="";
-      inCardFinished=false;
-      playState=IDLE;
-      return;
-    }
-
     int s1=digitalRead(S1_PIN);
     int s2=digitalRead(S2_PIN);
 
@@ -2937,7 +3137,6 @@ void loop(){
       bits="";
       countBit=0;
       prev_s1=-1;
-      captureStartMs=millis();
       playState=WAITING_FOR_IN_CARD;  // Chờ "in_card" phát xong
       inCardFinished=false;  // Reset flag
     }
@@ -2945,7 +3144,7 @@ void loop(){
       playBase("out_card");
       
       capturing=false;
-      savedCardFile="";
+      savedFileNumber=-1;
       playState=IDLE;
       pendingCardId="";
       inCardFinished=false;  // Reset flag
@@ -2994,7 +3193,7 @@ void loop(){
   //////////////////////////////////////////////////
   // DIGITAL TOUCH PIN 32
   //////////////////////////////////////////////////
-  bool touchState = digitalRead(TOUCH_PIN); // HIGH = touched, LOW = not touched
+  bool touchState = digitalRead(TOUCH_PIN); // LOW = touched, HIGH = not touched
   unsigned long nowTouch = millis();
 
   // Lần đầu tiên sau khi boot: chỉ khởi tạo trạng thái, không làm hành động (tránh phát touch tự động)
@@ -3002,61 +3201,43 @@ void loop(){
     touchInitialized = true;
     touchLastState = touchState;
     lastTouchChange = nowTouch;
-    touchHoldStart = 0;
-    longPressTriggered = false;
   }
-
-  // Hold detector chạy độc lập với debounce click:
-  // chỉ bật final khi TOUCH giữ LOW liên tục đủ 5 giây.
-  if(touchState == HIGH){
-    if(touchHoldStart == 0){
-      touchHoldStart = nowTouch;
-      longPressTriggered = false;
-    } else if(!longPressTriggered && (nowTouch - touchHoldStart >= FINAL_MODE_HOLD_MS)){
-      setFinalMode(true, true);
-      longPressTriggered = true;
-    }
-  } else {
-    touchHoldStart = 0;
-    longPressTriggered = false;
-  }
-
   // Xử lý khi có thay đổi trạng thái touch (debounce 100ms)
   if(touchState != touchLastState && (nowTouch - lastTouchChange > 100)){
     lastTouchChange = nowTouch;
 
-    if(touchState == HIGH){ // Touch pressed (LOW -> HIGH)
-      // Double click touch -> play BMG when card is present (regardless of L2 hold)
-      static unsigned long lastTouchPressForBmg = 0;
-      const bool hasCard = currentCardId.length() > 0;
-      const bool canBmg  = hasCard && !capturing;
-      unsigned long dt  = nowTouch - lastTouchPressForBmg;
+    if(touchState == LOW){ // Touch pressed (HIGH -> LOW)
+      // Trường hợp KHÔNG giữ L2: dùng để đổi màu LED tuần tự + phát touch
+  if(!btn17Held){
+        ledPresetIndex = (ledPresetIndex + 1) % LED_PRESET_COUNT;
+        applyLedPresetByIndex(ledPresetIndex);
+        // Phát âm touch nếu có cấu hình
+        playBase("touch");
+      }
+      // Trường hợp đang giữ L2 và đã có card: 1 click = voice, double click = BMG
+      else if(currentCardId.length() > 0 && !capturing){
+        static unsigned long lastTouchPressForBmg = 0;
+        unsigned long dt = nowTouch - lastTouchPressForBmg;
 
-      if(canBmg && dt >= 20 && dt <= 700){
-        Serial.printf("TOUCH DOUBLE CLICK: Trigger BMG (card='%s', dt=%lu)\n",
-                      currentCardId.c_str(), dt);
-        playBmgFile();
-        lastTouchPressForBmg = 0; // reset
-      } else {
-        // Not holding L2: cycle LED preset + play base "touch"
-        if(!btn17Held){
-          ledPresetIndex = (ledPresetIndex + 1) % LED_PRESET_COUNT;
-          applyLedPresetByIndex(ledPresetIndex);
-          playBase("touch");
-        }
-        // Holding L2 with a card: single click -> play voice
-        else if(canBmg){
-          if(millis() - lastVoicePlay > 300){ // debounce between voice plays
+        Serial.printf("TOUCH PRESSED (L2 held): dt=%lu, voiceType='%s'\n",
+                      dt, currentVoiceType.c_str());
+
+        if(dt > 50 && dt < 400){
+          // Double click: kích hoạt BMG
+          Serial.println("TOUCH DOUBLE CLICK: Trigger BMG");
+          playBmgFile();
+          lastTouchPressForBmg = 0; // reset
+        } else {
+          // Single click: phát voice bình thường
+          if(millis() - lastVoicePlay > 300){ // debounce giữa các lần voice
             Serial.printf("TOUCH SINGLE CLICK: Playing voice '%s'\n", currentVoiceType.c_str());
             playVoiceFile();
             lastVoicePlay = millis();
           } else {
             Serial.println("VOICE DEBOUNCED: Too soon since last voice play");
           }
+          lastTouchPressForBmg = nowTouch;
         }
-
-        // Save timestamp for potential BMG double-click
-        lastTouchPressForBmg = nowTouch;
       }
     }
   }
@@ -3109,9 +3290,9 @@ void loop(){
         closePlaying=false;
         typePlayingPulse=false;  // Tắt pulse
 
-        if(btn17Held && !finalModeEnabled){
-          if(fileToNum(savedCardFile.c_str()) > 0){
-            playCardRoot(savedCardFile.c_str());
+        if(btn17Held){
+          if(savedFileNumber>0){
+            playCardRoot(savedFileNumber);
           }
           // Nếu không có card → không phát gì
         }
@@ -3134,11 +3315,6 @@ void loop(){
       else if(voicePlaying){
         voicePlaying=false;
         Serial.println("Voice file finished playing");
-        // Fade out LED only when nothing else (MP3/BMG) is playing
-        if(!mp3Playing && !bmgPlaying){
-          ledFadingOut=true;
-          ledFadeStart=millis();
-        }
       }
       // BMG file phát xong → reset flag
       else if(bmgPlaying){

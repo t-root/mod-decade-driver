@@ -1,4 +1,7 @@
-.pio/build/esp32c3/src/main.cpp.o: src/main.cpp \
+.pio/build/esp32c3/lib868/LittleFS/LittleFS.cpp.o: \
+ C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/LittleFS/src/LittleFS.cpp \
+ C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/FS/src/vfs_api.h \
+ C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/FS/src/FS.h \
  C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/cores/esp32/Arduino.h \
  C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/cores/esp32/esp_arduino_version.h \
  C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/freertos/include/freertos/FreeRTOS.h \
@@ -161,39 +164,7 @@
  C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/esp_hw_support/include/soc/esp32/spiram.h \
  C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/cores/esp32/io_pin_remap.h \
  C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/cores/esp32/Arduino.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/cores/esp32/HardwareSerial.h \
- .pio/libdeps/esp32c3/DFRobotDFPlayerMini/DFRobotDFPlayerMini.h \
- .pio/libdeps/esp32c3/ArduinoJson/src/ArduinoJson.h \
- .pio/libdeps/esp32c3/ArduinoJson/src/ArduinoJson.hpp \
- .pio/libdeps/esp32c3/ArduinoJson/src/ArduinoJson/Configuration.hpp \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFi.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/cores/esp32/Print.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/cores/esp32/IPv6Address.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiType.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiSTA.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiGeneric.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/esp_wifi/include/esp_smartconfig.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/wifi_provisioning/include/wifi_provisioning/manager.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/protocomm/include/common/protocomm.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/protocomm/include/security/protocomm_security.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/wifi_provisioning/include/wifi_provisioning/wifi_config.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiAP.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiScan.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiClient.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/cores/esp32/Client.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiServer.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/cores/esp32/Server.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiUdp.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/cores/esp32/Udp.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/cores/esp32/cbuf.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src/WebServer.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src/HTTP_Method.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/nghttp/port/include/http_parser.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src/Uri.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src/detail/RequestHandler.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/Preferences/src/Preferences.h \
+ C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/FS/src/FSImpl.h \
  C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/LittleFS/src/LittleFS.h \
  C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/FS/src/FS.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/SPIFFS/src/SPIFFS.h \
- src/default_sound_json.h \
- C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/soc/esp32c3/include/soc/rtc_cntl_reg.h
+ C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/esp_littlefs/include/esp_littlefs.h

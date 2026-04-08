@@ -41,8 +41,8 @@ void setup() {
   Serial.println("Khoi dong DFPlayer (ESP32-C3)...");
 
   // ===== ESP32-C3 UART1: RX=GPIO20, TX=GPIO21 =====
-  Serial.println("Config: RX=20, TX=21 (UART1)");
-  mySerial.begin(9600, SERIAL_8N1, 20, 21);
+  Serial.println("Config: RX=21, TX=20 (UART1)");
+  mySerial.begin(9600, SERIAL_8N1, 21, 20);
   delay(1500);
 
   if (player.begin(mySerial)) {
