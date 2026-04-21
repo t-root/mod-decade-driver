@@ -7,7 +7,8 @@
 #include <Preferences.h>
 #include <LittleFS.h>
 #include <SPIFFS.h>
-#include "default_sound_json.h"
+#include "default_sound_json.h" // IWYU pragma: keep
+#include "pin_config.h" // IWYU pragma: keep
 
 // Disable brownout detector to prevent resets
 #include "soc/soc.h"
@@ -25,31 +26,8 @@ static DynamicJsonDocument soundConfig(150000);
 
 
 //////////////////////////////////////////////////////
-// PINS - ESP32-C3 Super Mini mapping
-// Chú ý: bạn cần đấu dây theo đúng chân mới này:
-//  - S1_PIN  -> GPIO2
-//  - S2_PIN  -> GPIO3
-//  - L1   -> GPIO4
-//  - L2   -> GPIO5
-//  - TOUCH   -> GPIO6 (dùng như digital input)
-//  - LED_R   -> GPIO7
-//  - LED_G   -> GPIO8
-//  - LED_B   -> GPIO9
-//  - DFPlayer TX -> GPIO20 (RX của ESP32-C3)
-//  - DFPlayer RX -> GPIO21 (TX của ESP32-C3)
+// LED
 //////////////////////////////////////////////////////
-#define S1_PIN 1
-#define S2_PIN 3
-#define L1 4
-#define L2 5
-#define TOUCH_PIN 6
-
-//////////////////////////////////////////////////////
-// LED (ESP32-C3 GPIO)
-//////////////////////////////////////////////////////
-#define LED_R 7
-#define LED_G 8
-#define LED_B 9
 
 #define RED_CH 0
 #define GREEN_CH 1

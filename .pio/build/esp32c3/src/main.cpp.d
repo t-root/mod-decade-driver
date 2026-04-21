@@ -195,5 +195,5 @@
  C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/LittleFS/src/LittleFS.h \
  C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/FS/src/FS.h \
  C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/libraries/SPIFFS/src/SPIFFS.h \
- src/default_sound_json.h \
+ src/default_sound_json.h src/pin_config.h \
  C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/soc/esp32c3/include/soc/rtc_cntl_reg.h
