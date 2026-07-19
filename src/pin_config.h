@@ -23,3 +23,9 @@ constexpr uint8_t TOUCH_PIN = 6;
 constexpr uint8_t LED_R = 7;
 constexpr uint8_t LED_G = 8;
 constexpr uint8_t LED_B = 9;
+
+constexpr uint8_t DFPLAYER_RX_PIN = 21;
+constexpr uint8_t DFPLAYER_TX_PIN = 20;
+
+constexpr const char* AP_SSID = "Driver Decade";
+constexpr const char* AP_PASS = "decade123";

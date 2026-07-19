@@ -1,4 +1,4 @@
-.pio/build/esp32c3/liba29/DFRobotDFPlayerMini/DFRobotDFPlayerMini.cpp.o: \
+.pio/build/esp32c3/libd44/DFRobotDFPlayerMini/DFRobotDFPlayerMini.cpp.o: \
  .pio/libdeps/esp32c3/DFRobotDFPlayerMini/DFRobotDFPlayerMini.cpp \
  .pio/libdeps/esp32c3/DFRobotDFPlayerMini/DFRobotDFPlayerMini.h \
  C:/Users/T-Root/.platformio/packages/framework-arduinoespressif32/cores/esp32/Arduino.h \

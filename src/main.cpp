@@ -15,7 +15,7 @@
 #include "soc/rtc_cntl_reg.h"
 
 //////////////////////////////////////////////////////
-// DFPLAYER (ESP32-C3: dùng UART1, ví dụ TX=GPIO21, RX=GPIO20)
+// DFPLAYER (ESP32-WROOM: UART1, TX=GPIO5, RX=GPIO4)
 //////////////////////////////////////////////////////
 HardwareSerial mySerial(1);
 DFRobotDFPlayerMini player;
@@ -133,9 +133,6 @@ void clearCardLog(){
 //////////////////////////////////////////////////////
 // WEB / WIFI / PERSIST
 //////////////////////////////////////////////////////
-const char* AP_SSID = "Driver Decade";
-const char* AP_PASS = "decade123";
-
 WebServer server(80);
 Preferences pref;
 
@@ -2657,8 +2654,8 @@ void setup(){
 
   // Initialize DFPlayer (không còn phụ thuộc SD của ESP32)
   Serial.println("Initializing DFPlayer...");
-  // ESP32-C3 Super Mini: dùng UART1, RX=GPIO21, TX=GPIO20 để nối DFPlayer
-  mySerial.begin(9600, SERIAL_8N1, 21, 20);
+  // ESP32-WROOM DevKit: UART1 RX/TX để nối DFPlayer (xem pin_config.h)
+  mySerial.begin(9600, SERIAL_8N1, DFPLAYER_RX_PIN, DFPLAYER_TX_PIN);
   delay(2000); // Wait before DFPlayer init
   player.begin(mySerial);
   delay(500); // Wait for DFPlayer to stabilize
